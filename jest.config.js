@@ -11,6 +11,6 @@ module.exports = {
   coverageDirectory: './coverage',
   modulePaths: ['./'],
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   testMatch: ['**/*.{test,spec}.ts'],
 };

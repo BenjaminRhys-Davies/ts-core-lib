@@ -9,9 +9,9 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "dom",
+      "esnext",
       "dom.iterable",
-      "esnext"
+      "dom"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -30,9 +30,13 @@
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
     "typeRoots": [
-      "@types",
-      "node_modules/@types"
-    ]
+      "node_modules/@types",
+      "@types"
+    ],
+    "types": [
+      "node",
+      "jest",
+    ],
   },
   "include": [
     "src"
