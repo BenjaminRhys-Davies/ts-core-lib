@@ -11,6 +11,7 @@ module.exports = {
   coverageDirectory: './coverage',
   modulePaths: ['./'],
   preset: 'ts-jest',
+  setupFilesAfterEnv: ['./jest.setup.js'],
   testEnvironment: 'jsdom',
   testMatch: ['**/*.{test,spec}.ts'],
 };

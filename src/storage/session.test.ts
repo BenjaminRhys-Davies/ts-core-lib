@@ -1,8 +1,11 @@
-import { storage, helper } from './storage.mock';
+import { storageMock } from './storage.mock';
+
+type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
 // Mocks
-const jsonMock = jest.fn();
-jest.doMock('../parse', () => ({ parse: { json: jsonMock } }));
+const jsonMockResult = 'EXPECTED PARSE JSON RESULT';
+const jsonMock = jest.fn().mockImplementation(() => jsonMockResult);
+jest.doMock('../parse/json', () => ({ json: jsonMock }));
 
 // Under test
 import { retrieve, store, remove } from './session';
@@ -10,13 +13,10 @@ import { retrieve, store, remove } from './session';
 describe('Session', () => {
   const key = 'EXPECTED KEY';
   const sessionData = ['', '1', 'email@address.com', { isUser: true }];
-
-  let sessionStorageMock: ReturnType<typeof storage>;
-  let sessionStorageMockClear: () => void;
+  let sessionStorageMock: ReturnType<typeof storageMock>;
 
   beforeEach(() => {
-    sessionStorageMock = storage();
-    sessionStorageMockClear = helper(sessionStorageMock, 'mockClear');
+    sessionStorageMock = storageMock();
 
     Object.defineProperty(global, 'sessionStorage', {
       enumerable: true,
@@ -26,35 +26,62 @@ describe('Session', () => {
   });
 
   afterEach(() => {
-    sessionStorageMockClear();
+    jsonMock.mockClear();
+    sessionStorageMock.mockClear();
   });
 
   describe('retrieve ()', () => {
-    describe('can get', () => {
+    describe('should', () => {
       sessionData.forEach(session => {
-        let value: null | typeof session;
+        describe('get', () => {
+          let value: undefined | ElementType<typeof sessionData>;
+
+          beforeEach(() => {
+            sessionStorageMock.getItem.mockImplementation(() => JSON.stringify(session));
+            value = retrieve<typeof session>(key);
+          });
+
+          afterEach(() => {
+            jsonMock.mockClear();
+          });
+
+          it('item', () => {
+            expect(sessionStorageMock.getItem).toHaveBeenCalledWith(key);
+          });
+          it('parse item', () => {
+            expect(jsonMock).toHaveBeenCalledWith(JSON.stringify(session));
+          });
+          it('return value', () => {
+            expect(value).toEqual(jsonMockResult);
+          });
+        });
+      });
+
+      describe('handle a non-existing key', () => {
+        let value: undefined | string;
 
         beforeEach(() => {
-          store(key, session);
-          value = retrieve<typeof session>(key);
+          sessionStorageMock.getItem.mockImplementation(() => null);
+          value = retrieve<string>('NON_EXISTING KEY');
         });
-        it('item', () => {
-          expect(sessionStorageMock.getItem).toHaveBeenCalledWith(key);
+
+        it('not parse item', () => {
+          expect(jsonMock).not.toHaveBeenCalled();
         });
-        it('value', () => {
-          expect(value).toEqual(session);
+        it('return undefined', () => {
+          expect(value).toBeUndefined();
         });
       });
     });
   });
 
   describe('store ()', () => {
-    describe('can persist', () => {
+    describe('should', () => {
       sessionData.forEach(session => {
         beforeEach(() => {
           store(key, session);
         });
-        it('session', () => {
+        it('set item', () => {
           expect(sessionStorageMock.setItem).toHaveBeenCalledWith(key, JSON.stringify(session));
         });
       });
@@ -62,18 +89,12 @@ describe('Session', () => {
   });
 
   describe('remove ()', () => {
-    describe('can clear', () => {
-      sessionData.forEach(session => {
-        beforeEach(() => {
-          store(key, session);
-          remove(key);
-        });
-        it('item', () => {
-          expect(sessionStorageMock.removeItem).toHaveBeenCalledWith(key);
-        });
-        it('value', () => {
-          expect(retrieve<typeof session>(key)).toBeNull();
-        });
+    describe('should', () => {
+      beforeEach(() => {
+        remove(key);
+      });
+      it('remove item', () => {
+        expect(sessionStorageMock.removeItem).toHaveBeenCalledWith(key);
       });
     });
   });

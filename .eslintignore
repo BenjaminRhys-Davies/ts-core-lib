@@ -6,3 +6,4 @@ npm-debug.log
 scripts
 .jest-test-results.json
 yarn-error.log
+jest.setup.js
