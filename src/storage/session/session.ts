@@ -1,4 +1,4 @@
-import { json } from '../parse/json';
+import { json } from '../../parse/json';
 
 export const store = <_, T>(key: string, value: T): void => sessionStorage.setItem(key, JSON.stringify(value));
 

@@ -5,6 +5,12 @@ jest.mock('./form', () => ({ form }));
 const header = 'EXPECTED HEADER';
 jest.mock('./header', () => ({ header }));
 
+const parse = 'EXPECTED PARSE';
+jest.mock('./parse', () => ({ parse }));
+
+const storage = 'EXPECTED STORAGE';
+jest.mock('./storage', () => ({ storage }));
+
 // Under test
 import * as index from './index';
 
@@ -15,6 +21,12 @@ describe('index', () => {
     });
     it('header', () => {
       expect(index.header).toEqual(header);
+    });
+    it('parse', () => {
+      expect(index.parse).toEqual(parse);
+    });
+    it('storage', () => {
+      expect(index.storage).toEqual(storage);
     });
   });
 });

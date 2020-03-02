@@ -1,14 +1,14 @@
-import { storageMock } from './storage.mock';
+import { storageMock } from '../storage.mock';
 
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
 // Mocks
 const jsonMockResult = 'EXPECTED PARSE JSON RESULT';
 const jsonMock = jest.fn().mockImplementation(() => jsonMockResult);
-jest.doMock('../parse/json', () => ({ json: jsonMock }));
+jest.mock('../../parse/json', () => ({ json: jsonMock }));
 
 // Under test
-import { retrieve, store, remove } from './session';
+import { remove, retrieve, store } from './session';
 
 describe('Session', () => {
   const key = 'EXPECTED KEY';
@@ -28,6 +28,17 @@ describe('Session', () => {
   afterEach(() => {
     jsonMock.mockClear();
     sessionStorageMock.mockClear();
+  });
+
+  describe('remove ()', () => {
+    describe('should', () => {
+      beforeEach(() => {
+        remove(key);
+      });
+      it('remove item', () => {
+        expect(sessionStorageMock.removeItem).toHaveBeenCalledWith(key);
+      });
+    });
   });
 
   describe('retrieve ()', () => {
@@ -84,17 +95,6 @@ describe('Session', () => {
         it('set item', () => {
           expect(sessionStorageMock.setItem).toHaveBeenCalledWith(key, JSON.stringify(session));
         });
-      });
-    });
-  });
-
-  describe('remove ()', () => {
-    describe('should', () => {
-      beforeEach(() => {
-        remove(key);
-      });
-      it('remove item', () => {
-        expect(sessionStorageMock.removeItem).toHaveBeenCalledWith(key);
       });
     });
   });

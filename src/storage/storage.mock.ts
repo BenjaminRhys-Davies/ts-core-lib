@@ -2,7 +2,6 @@ export interface StorageMock extends Storage {
   clear: jest.Mock<void>;
   getItem: jest.Mock<null | string>;
   len: number;
-  length: number;
   removeItem: jest.Mock<void>;
   setItem: jest.Mock<void>;
   mockClear: () => void;

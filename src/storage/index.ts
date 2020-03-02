@@ -1,7 +1,5 @@
-import { retrieve, store, remove } from './session';
+import { session } from './session';
 
-export const session = {
-  retrieve,
-  store,
-  remove,
+export const storage = {
+  session,
 };
