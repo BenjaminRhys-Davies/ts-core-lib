@@ -1,0 +1,7 @@
+build
+coverage
+jest.config.js
+node_modules
+npm-debug.log
+scripts
+.jest-test-results.json

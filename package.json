@@ -1,0 +1,51 @@
+{
+  "name": "ts-core-lib",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "clean": "npm run test -- --clearCache && rimraf ./build ./coverage ./.jest-test-results.json",
+    "compile": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "start": "ts-node ./src/index.ts",
+    "start:watch": "nodemon",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
+    "test:report": "npm run test -- --json --outputFile=./.jest-test-results.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BenjaminRhys-Davies/ts-core-lib.git"
+  },
+  "private": true,
+  "keywords": [],
+  "author": "Benjamin Rhys-Davies <brhysdavies@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.5.2",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-formatter-pretty": "^3.0.1",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.1.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {}
+}
