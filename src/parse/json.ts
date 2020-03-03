@@ -1,4 +1,4 @@
-export const json = (input: string): undefined | null | boolean | number | string | object => {
+export const json = (input: string): unknown => {
   try {
     return JSON.parse(input);
   } catch (e) {
