@@ -11,6 +11,9 @@ jest.mock('./parse', () => ({ parse }));
 const query = 'EXPECTED QUERY';
 jest.mock('./query', () => ({ query }));
 
+const report = 'EXPECTED REPORT';
+jest.mock('./report', () => ({ report }));
+
 const storage = 'EXPECTED STORAGE';
 jest.mock('./storage', () => ({ storage }));
 
@@ -30,6 +33,9 @@ describe('index', () => {
     });
     it('query', () => {
       expect(index.query).toEqual(query);
+    });
+    it('report', () => {
+      expect(index.report).toEqual(report);
     });
     it('storage', () => {
       expect(index.storage).toEqual(storage);
