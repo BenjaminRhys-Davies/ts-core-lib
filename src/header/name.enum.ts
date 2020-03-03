@@ -1,4 +1,4 @@
-// header names are lower cased
+// axios header names are lower cased
 export enum name {
   contentDisposition = 'content-disposition',
   authorization = 'authorization',
