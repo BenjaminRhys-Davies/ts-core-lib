@@ -11,7 +11,7 @@ describe('data ()', () => {
         { args: { name: '', value: null }, name: 'empty name & null value' },
       ].forEach(({ args, name }) => {
         it(name, () => {
-          expect(data([args])).toEqual(emptyFormData);
+          expect(data([args])).toMatchObject(emptyFormData);
         });
       });
     });

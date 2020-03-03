@@ -10,20 +10,20 @@ describe('fileName ()', () => {
     describe('handle', () => {
       describe('missing', () => {
         it('header', () => {
-          expect(fileName()).toEqual(undefined);
+          expect(fileName()).toBeUndefined();
         });
 
         it('filename', () => {
           const headers = { [contentDisposition]: `attachment; something*=UTF-8''what;` };
 
-          expect(fileName(headers)).toEqual(undefined);
+          expect(fileName(headers)).toBeUndefined();
         });
       });
       describe('invalid', () => {
         it('header', () => {
           const headers = { [contentDisposition]: `attachment; fileXname=` };
 
-          expect(fileName(headers)).toEqual(undefined);
+          expect(fileName(headers)).toBeUndefined();
         });
       });
     });
