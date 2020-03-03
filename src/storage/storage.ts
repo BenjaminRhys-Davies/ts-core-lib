@@ -9,11 +9,11 @@ type StorageFn = {
 const storageFn = (store: Storage): StorageFn => ({
   remove: (key: string): void => store.removeItem(key),
   retrieve: <T>(key: string) => {
-    const value = store.getItem(key);
-    if (value !== null) {
-      const jsonValue = json(value);
-      if (jsonValue !== undefined) {
-        return jsonValue as T;
+    const serialised = store.getItem(key);
+    if (serialised !== null) {
+      const value = json(serialised);
+      if (value !== undefined) {
+        return value as T;
       }
     }
     return null;
