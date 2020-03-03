@@ -6,15 +6,19 @@ jest.mock('./name.enum', () => ({ name: { etag } }));
 import { version } from './version';
 
 describe('version ()', () => {
-  describe('can', () => {
-    it('handle missing etag header', () => {
-      expect(version()).toEqual(null);
+  describe('should', () => {
+    describe('handle', () => {
+      it('missing etag header', () => {
+        expect(version()).toBeNull();
+      });
     });
 
-    it('return etag header', () => {
-      const v = 'EXPECTED VERSION';
+    describe('return', () => {
+      it('etag header', () => {
+        const v = 'EXPECTED VERSION';
 
-      expect(version({ [etag]: v })).toEqual(v);
+        expect(version({ [etag]: v })).toEqual(v);
+      });
     });
   });
 });

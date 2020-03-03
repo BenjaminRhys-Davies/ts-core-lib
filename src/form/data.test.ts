@@ -2,7 +2,7 @@
 import { data } from './data';
 
 describe('data ()', () => {
-  describe('can handle', () => {
+  describe('should handle', () => {
     describe('invalid', () => {
       const emptyFormData = new FormData();
       [

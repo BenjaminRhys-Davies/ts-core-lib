@@ -2,23 +2,30 @@
 import { json } from './json';
 
 describe('json ()', () => {
-  describe('can gracefully fail', () => {
-    ['', '{', '<', '"', ',', '('].forEach(test => {
-      it(`with '${test}'`, () => {
-        expect(json(test)).toEqual(undefined);
+  describe('should', () => {
+    describe('handle failure', () => {
+      ['', '{', '<', '"', ',', '('].forEach(test => {
+        it(`with '${test}'`, () => {
+          expect(json(test)).toEqual(undefined);
+        });
       });
     });
-  });
-  describe('can parse', () => {
-    [
-      { test: 'false', type: 'boolean' },
-      { test: '11', type: 'number' },
-      { test: '"string"', type: 'string' },
-      { test: '{}', type: 'object' },
-      { test: '{"a":1}', type: 'object' },
-    ].forEach(({ test, type }) => {
-      it(`with '${test}'`, () => {
-        expect(typeof json(test)).toEqual(type);
+    describe('parse', () => {
+      [
+        { expected: false, test: 'false', type: 'boolean' },
+        { expected: 11, test: '11', type: 'number' },
+        { expected: 'string', test: '"string"', type: 'string' },
+        { expected: {}, test: '{}', type: 'object' },
+        { expected: { a: 1 }, test: '{"a":1}', type: 'object' },
+      ].forEach(({ expected, test, type }) => {
+        describe(`'${test}' returns expected`, () => {
+          it('type', () => {
+            expect(typeof json(test)).toEqual(type);
+          });
+          it('value', () => {
+            expect(json(test)).toEqual(expected);
+          });
+        });
       });
     });
   });
